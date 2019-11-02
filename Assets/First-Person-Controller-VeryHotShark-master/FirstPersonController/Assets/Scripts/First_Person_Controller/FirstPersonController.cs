@@ -149,6 +149,7 @@ namespace VHS
 
             void Update()
             {
+                Debug.Log(movementInputData.InputVector);    
 
                 if(m_yawTransform != null)
                     RotateTowardsCamera();
