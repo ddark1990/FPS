@@ -9,19 +9,24 @@ namespace GoomerFPSController
     public class FPSController : MonoBehaviour
     {
         [Header("Config")]
-        public float AccelerationSpeed = 2;
-        public float WalkForwardSpeed = 4;
-        public float StrafeSpeed = 3;
-        public float WalkBackwardSpeed = 2;
-        public LayerMask LayerMask;
+        [Range(1, 10)] public float AccelerationSpeed = 2;
+        [Range(1, 10)] public float WalkForwardSpeed = 4;
+        [Range(1, 10)] public float StrafeSpeed = 3;
+        [Range(1, 10)] public float WalkBackwardSpeed = 2;
+        [Range(1,5)] public float SprintMultiplier = 1.5f;
+        [Range(1,25)] public float JumpHeight = 2f;
+        public LayerMask GroundMask;
         [Space]
-        public bool ControllerDebug;
-        [Header("Debug")]
-        public bool IsGrounded;
-        public bool IsWalking;
-        public float accelerationOutput;
-        public float walkSpeedOutput;
-        public Vector2 axisInput;
+        [Header("Private var")]
+        [SerializeField] private bool IsGrounded;
+        [SerializeField] private bool IsWalking;
+        [SerializeField] private bool IsSprinting;
+        [SerializeField] private float accelerationOutput;
+        [SerializeField] private float walkSpeedOutput;
+        [SerializeField] private Vector2 axisInput;
+        [Space]
+        public bool DrawDebugRays;
+
 
         private CapsuleCollider capsuleCollider;
         private Rigidbody rb;
@@ -42,39 +47,46 @@ namespace GoomerFPSController
             Init();
         }
 
+        private void FixedUpdate()
+        {
+            IsGrounded = ControllerInput.IsGrounded(capsuleCollider, GroundMask);
+            MovePlayer(axisInput, walkSpeedOutput);
+        }
+
         private void Update()
         {
             Debug();
 
-            axisInput = ControllerInput.GetAxisInput(axisInput.x, axisInput.y);
-            accelerationOutput = ControllerInput.GetAcceleration(AccelerationSpeed);
-            walkSpeedOutput = ControllerInput.GetMovementSpeed(axisInput, WalkForwardSpeed, WalkBackwardSpeed, StrafeSpeed, accelerationOutput); //AWSD keys
-            IsWalking = ControllerInput.IsWalking();
-
-            rb.MovePosition(transform.position + new Vector3(axisInput.x, 0, axisInput.y) * Time.deltaTime * walkSpeedOutput);
+            axisInput = ControllerInput.GetAxisOuput(axisInput.x, axisInput.y); //grabs the axis from unity's Input in project settings
+            accelerationOutput = ControllerInput.AccelerationOutput(AccelerationSpeed);
+            walkSpeedOutput = ControllerInput.MovementSpeedOutput(axisInput, WalkForwardSpeed, WalkBackwardSpeed, StrafeSpeed, accelerationOutput, SprintMultiplier); //AWSD keys
         }
 
-        public bool isGrounded()
+        private void MovePlayer(Vector2 inputAxis, float _walkSpeedOutput)
         {
-            colliderBottom = capsuleCollider.bounds.center - new Vector3(0, 0.999f, 0);
+            IsWalking = ControllerInput.WalkOutput();
+            if (IsSprinting) IsWalking = false;
+            IsSprinting = ControllerInput.SprintOutput();
 
-            var rayLength = 0.2f;
-            var rayDir = new Vector3(0, -rayLength, 0);
+            rb.MovePosition(transform.position + new Vector3(inputAxis.x, 0, inputAxis.y) * Time.deltaTime * _walkSpeedOutput);
 
-            return Physics.Raycast(colliderBottom, rayDir, rayLength, LayerMask);
+            if(IsGrounded && Input.GetKeyDown(KeyCode.Space))
+            {
+                rb.AddForce(new Vector3(0, JumpHeight, 0), ForceMode.VelocityChange);
+            }
         }
 
         private void Debug()
         {
-            if (!ControllerDebug) return;
+            if (!DrawDebugRays) return;
 
-            var groundCheckRayDir = new Vector3(0, -0.2f, 0);
+            var groundCheckRayDir = new Vector3(0, -0.05f, 0);
+            colliderBottom = capsuleCollider.bounds.center - new Vector3(0, 0.999f, 0);
 
             //axis input debug ray at the bottom of collider
             UnityEngine.Debug.DrawRay(colliderBottom, new Vector3(axisInput.x , 0, axisInput.y), Color.blue);
 
             //ground check ray at the bottom of collider
-            IsGrounded = isGrounded();
             if (IsGrounded)
             {
                 UnityEngine.Debug.DrawRay(colliderBottom, groundCheckRayDir, Color.green);

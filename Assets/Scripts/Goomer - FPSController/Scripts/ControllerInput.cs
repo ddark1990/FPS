@@ -2,79 +2,115 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ControllerInput
+namespace GoomerFPSController
 {
-    public static float accelerationFloat;
-    public static bool walkInput;
-
-    public static bool IsWalking()
+    public static class ControllerInput
     {
-        if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0 ||
-            Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") < 0)
+        public static float accelerationFloat;
+        public static bool walkOutput, sprintOutput;
+
+        public static Vector2 GetAxisOuput(float x, float y)
         {
-            walkInput = true;
+            x = Input.GetAxis("Horizontal");
+            y = Input.GetAxis("Vertical");
+
+            return new Vector2(x, y);
         }
-        else walkInput = false;
-
-        return walkInput;
-    }
-    public static float GetAcceleration(float accelerationSpeed)
-    {
-        accelerationFloat = Mathf.Clamp01(accelerationFloat);
-
-        if (IsWalking())
+        public static bool WalkOutput()
         {
-            accelerationFloat += Time.deltaTime * accelerationSpeed;
+            return walkOutput = Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0 ||
+                                Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") < 0;
+        }
+        public static bool SprintOutput()
+        {
+            return sprintOutput = Input.GetKey(KeyCode.LeftShift);
+        }
+        public static bool IsGrounded(CapsuleCollider capsuleCollider, LayerMask groundMask)
+        {
+            var colliderBottom = capsuleCollider.bounds.center - new Vector3(0, 0.999f, 0);
 
-            if (accelerationFloat >= 1)
+            var rayLength = 0.05f;
+            var rayDir = new Vector3(0, -rayLength, 0);
+
+            return Physics.Raycast(colliderBottom, rayDir, rayLength, groundMask);
+        }
+        public static float AccelerationOutput(float accelerationSpeed)
+        {
+            accelerationFloat = Mathf.Clamp01(accelerationFloat);
+
+            if (WalkOutput())
             {
-                accelerationFloat = 1;
-                return accelerationFloat;
-            }
-        }
-        else
-        {
-            accelerationFloat -= Time.deltaTime * accelerationSpeed;
+                accelerationFloat += Time.deltaTime * accelerationSpeed;
 
-            if (accelerationFloat <= 0)
+                if (accelerationFloat >= 1)
+                {
+                    accelerationFloat = 1;
+                    return accelerationFloat;
+                }
+            }
+            else
             {
-                return accelerationFloat = 0;
+                accelerationFloat -= Time.deltaTime * accelerationSpeed;
+
+                if (accelerationFloat <= 0)
+                {
+                    return accelerationFloat = 0;
+                }
             }
+
+            return accelerationFloat;
+        }
+        public static float MovementSpeedOutput(Vector2 axisInput, float walkForwardSpeed, float walkBackwardSpeed, float strafeSpeed, float accelerationSpeed, float sprintMultiplier)
+        {
+            if(SprintOutput())
+            {
+                if (axisInput.y > 0 && axisInput.x == 0) //forward
+                {
+                    var walkForwardFloat = (walkForwardSpeed * accelerationSpeed) * sprintMultiplier;
+                    return walkForwardFloat;
+                }
+                else if (axisInput.y < 0) //backward
+                {
+                    var walkBackwardFloat = (walkBackwardSpeed * accelerationSpeed) * sprintMultiplier;
+                    return walkBackwardFloat;
+                }
+                else if (axisInput.x < 0) //strafe left
+                {
+                    var strafeFloat = (strafeSpeed * accelerationSpeed) * sprintMultiplier;
+                    return strafeFloat;
+                }
+                else if (axisInput.x > 0) //strafe right
+                {
+                    var strafeFloat = (strafeSpeed * accelerationSpeed) * sprintMultiplier;
+                    return strafeFloat;
+                }
+            }
+            else
+            {
+                if (axisInput.y > 0 && axisInput.x == 0) //forward
+                {
+                    var walkForwardFloat = walkForwardSpeed * accelerationSpeed;
+                    return walkForwardFloat;
+                }
+                else if (axisInput.y < 0) //backward
+                {
+                    var walkBackwardFloat = (walkBackwardSpeed * accelerationSpeed);
+                    return walkBackwardFloat;
+                }
+                else if (axisInput.x < 0) //strafe left
+                {
+                    var strafeFloat = (strafeSpeed * accelerationSpeed);
+                    return strafeFloat;
+                }
+                else if (axisInput.x > 0) //strafe right
+                {
+                    var strafeFloat = (strafeSpeed * accelerationSpeed);
+                    return strafeFloat;
+                }
+            }
+
+            return 0;
         }
 
-        return accelerationFloat;
-    }
-    public static float GetMovementSpeed(Vector2 axisInput, float walkForwardSpeed, float walkBackwardSpeed, float strafeSpeed, float accelerationSpeed)
-    {
-        if (axisInput.y > 0 && axisInput.x == 0) //forward
-        {
-            var walkForwardFloat = walkForwardSpeed * accelerationSpeed;
-            return walkForwardFloat;
-        }
-        else if(axisInput.y < 0) //backward
-        {
-            var walkBackwardFloat = (walkBackwardSpeed * accelerationSpeed);
-            return walkBackwardFloat;
-        }
-        else if (axisInput.x < 0) //strafe left
-        {
-            var strafeFloat = (strafeSpeed * accelerationSpeed);
-            return strafeFloat;
-        }
-        else if (axisInput.x > 0) //strafe right
-        {
-            var strafeFloat = (strafeSpeed * accelerationSpeed);
-            return strafeFloat;
-        }
-
-        return 0;
-    }
-
-    public static Vector2 GetAxisInput(float x, float y)
-    {
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-
-        return new Vector2(x,y);
     }
 }
