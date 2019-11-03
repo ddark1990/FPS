@@ -9,13 +9,15 @@ namespace GoomerFPSController
         public static float accelerationFloat;
         public static bool walkOutput, sprintOutput;
 
-        public static Vector2 GetAxisOuput(float x, float y)
+        public static Vector2 GetAxisInputs()
         {
-            x = Input.GetAxis("Horizontal");
-            y = Input.GetAxis("Vertical");
-
-            return new Vector2(x, y);
+            return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
+        public static Vector2 GetMouseInputs()
+        {
+            return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        }
+
         public static bool WalkOutput()
         {
             return walkOutput = Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0 ||
@@ -32,7 +34,7 @@ namespace GoomerFPSController
             var rayLength = 0.05f;
             var rayDir = new Vector3(0, -rayLength, 0);
 
-            return Physics.Raycast(colliderBottom, rayDir, rayLength, groundMask);
+            return Physics.CheckSphere(colliderBottom, 0.25f, groundMask);
         }
         public static float AccelerationOutput(float accelerationSpeed)
         {
@@ -111,6 +113,5 @@ namespace GoomerFPSController
 
             return 0;
         }
-
     }
 }
