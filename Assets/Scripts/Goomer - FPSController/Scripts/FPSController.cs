@@ -2,51 +2,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GoomerFPSController
 {
-    [RequireComponent(typeof(CapsuleCollider))]
+    [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
     public class FPSController : MonoBehaviour
     {
         [Header("SpeedConfig")]
-        [Range(1, 25)] public float AccelerationSpeed = 2;
-        [Range(1, 25)] public float WalkForwardSpeed = 4;
-        [Range(1, 25)] public float StrafeSpeed = 3;
-        [Range(1, 25)] public float WalkBackwardSpeed = 2;
-        [Range(1,5)] public float SprintMultiplier = 1.5f;
+        [Range(1f, 25)] public float WalkForwardSpeed = 4;
+        [Range(1f, 25)] public float StrafeSpeed = 3;
+        [Range(1f, 25)] public float WalkBackwardSpeed = 3;
+        [Range(1f,5)] public float SprintMultiplier = 1.4f;
         [Header("JumpConfig")]
-        [Range(1,25)] public float JumpHeight = 2f;
+        [Range(1,25)] public float maxJumpHeight = 7f;
         [Range(1,10)] public float FallMultiplier = 2.5f;
         [Range(1,10)] public float LowJumpMultiplier = 2f;
         [Header("MouseConfig")]
-        [Range(1, 10)] public float MouseSensetivity = 2f;
-        public bool Smooth = true;
-        [Range(1, 25)] public float SmoothFloat = 5;
+        [Range(1, 200)] public float MouseSensetivity = 40f;
         [Header("MaskConfig")]
         public LayerMask GroundMask;
-
         [Space]
         [Header("Private var")]
         [SerializeField] private bool IsGrounded;
         [SerializeField] private bool IsWalking;
         [SerializeField] private bool IsSprinting;
-        [SerializeField] private bool IsJumping;
-        [SerializeField] private bool cursorIsLocked;
-        [SerializeField] private float accelerationOutput;
-        [SerializeField] private float walkSpeedOutput;
-        [SerializeField] private Vector2 axisInput;
+        [SerializeField] private bool MidAir;
+        public bool cursorIsLocked;
+        public bool cameraLocked;
+        [SerializeField] private float moveSpeedOutput;
+        [SerializeField] public Vector2 axisInput;
         [SerializeField] private Vector2 mouseInput;
         [SerializeField] private float sphereSize;
         [Space]
+        [Header("Debug/Cache")]
         public bool DrawDebugRays;
         public PhysicMaterial ZeroFrictionMaterial;
+        public Transform LookAtTransform;
+        public Transform CameraPivot;
+        public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
 
+        private Animator animator;
         private CapsuleCollider capsuleCollider;
         private Rigidbody rb;
         private Vector3 colliderBottom;
-        private Vector3 moveDirection;
+        private Vector3 targetVelocity;
+        private Vector3 groundNormal;
         private Camera cam;
+        private float desiredPitch;
+        private float desiredYaw;
+        private float altYaw;
 
         private void Init()
         {
@@ -58,30 +64,24 @@ namespace GoomerFPSController
             capsuleCollider = GetComponent<CapsuleCollider>();
             rb = GetComponent<Rigidbody>();
             cam = GetComponentInChildren<Camera>();
+            animator = GetComponent<Animator>();
         }
         private void OnEnable()
         {
             Init();
         }
 
-        private void FixedUpdate()
-        {
-            IsGrounded = ControllerInput.IsGrounded(capsuleCollider, GroundMask);
-            CheckWall();
-            MovePlayer(axisInput, walkSpeedOutput);
-
-            Jump(JumpHeight);
-            RotatePlayer();
-        }
-
         private void Update()
         {
-            axisInput = ControllerInput.GetAxisInputs(); //grabs the axis from unity's Input in project settings
-            mouseInput = ControllerInput.GetMouseInputs(); //grabs the axis from unity's Input in project settings
-            accelerationOutput = ControllerInput.AccelerationOutput(AccelerationSpeed);
-            walkSpeedOutput = ControllerInput.MovementSpeedOutput(axisInput, WalkForwardSpeed, WalkBackwardSpeed, StrafeSpeed, accelerationOutput, SprintMultiplier); //AWSD keys
+            axisInput = ControllerInput.GetAxisInputs();
+            mouseInput = ControllerInput.GetMouseInputs();
+            IsGrounded = ControllerInput.IsGrounded(capsuleCollider, GroundMask, animator, out MidAir);
 
             InternalLockUpdate();
+            UpdateDesiredTargetSpeed(axisInput);
+            UpdateControllerInputs();
+            GetGroundNormal();
+
         }
 
         private void LateUpdate()
@@ -89,36 +89,111 @@ namespace GoomerFPSController
             RotateCamera();
         }
 
-        private void MovePlayer(Vector2 inputAxis, float _walkSpeedOutput)
+        public void UpdateDesiredTargetSpeed(Vector2 input)
+        {
+            if (input == Vector2.zero) return;
+
+            moveSpeedOutput = Mathf.Clamp(moveSpeedOutput, 0, 10);
+
+            if (input.x > 0 || input.x < 0)
+            {
+                //strafe
+                moveSpeedOutput = Mathf.Lerp(moveSpeedOutput, StrafeSpeed, 1);
+            }
+
+            if (input.y < 0)
+            {
+                //backwards
+                moveSpeedOutput = Mathf.Lerp(moveSpeedOutput, WalkBackwardSpeed, 1);
+            }
+
+            if (input.y > 0 && input.x == 0)
+            {
+                //forwards
+                moveSpeedOutput = Mathf.Lerp(moveSpeedOutput, WalkForwardSpeed, 1);
+            }
+            else
+            {
+                moveSpeedOutput = Mathf.Lerp(moveSpeedOutput, 0, Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                moveSpeedOutput *= SprintMultiplier;
+                IsSprinting = true;
+            }
+            else
+            {
+                IsSprinting = false;
+            }
+        }
+
+        private void UpdateControllerInputs() 
         {
             IsWalking = ControllerInput.WalkOutput();
             if (IsSprinting) IsWalking = false;
-            IsSprinting = ControllerInput.SprintOutput();
 
-            moveDirection = new Vector3(axisInput.x, 0, axisInput.y);
-            moveDirection = transform.TransformDirection(moveDirection);
+            targetVelocity = new Vector3(axisInput.x * moveSpeedOutput, rb.velocity.y, axisInput.y * moveSpeedOutput);
+            targetVelocity = transform.TransformDirection(targetVelocity);
 
-            rb.AddForce(transform.position + moveDirection * Time.deltaTime * _walkSpeedOutput);
+            rb.velocity = targetVelocity;
+
+            if(animator) //move
+            {
+                animator.SetFloat("Horizontal", axisInput.x * moveSpeedOutput);
+                animator.SetFloat("Vertical", axisInput.y * moveSpeedOutput);
+
+                animator.GetBoneTransform(HumanBodyBones.Head).LookAt(LookAtTransform); //controlls the headlook
+
+                //animator.speed = moveSpeedOutput;
+            }
+
+            RotatePlayer();
+            Jump(maxJumpHeight);
+            AltLook();
+
+        }
+
+        private void AltLook()
+        {
+            var origYRot = 0f;
+
+            if (Input.GetKey(KeyCode.LeftAlt) && !cameraLocked)
+            {
+                altYaw += mouseInput.x * MouseSensetivity * Time.deltaTime;
+                altYaw = Mathf.Clamp(altYaw, -100, 100);
+                CameraPivot.localRotation = Quaternion.Euler(new Vector3(0, altYaw, 0));
+            }
+            else
+            {
+                CameraPivot.localRotation = Quaternion.Euler(new Vector3(0, origYRot, 0));
+                //StartCoroutine(LerpFloat(altYaw, origYRot, 1));
+                //altYaw = Mathf.Lerp(altYaw, origYRot, 1 * Time.deltaTime);
+                altYaw = origYRot; //find a way to lerp 
+            }
         }
 
         private void RotatePlayer()
         {
-            var yRot = mouseInput.x * MouseSensetivity;
+            if (Input.GetKey(KeyCode.LeftAlt) || cameraLocked) return;
 
-            var playerTargetRot = transform.localRotation * Quaternion.Euler(0, yRot, 0);
+            //var yRot = mouseInput.x * MouseSensetivity;
 
-            if(Smooth) transform.localRotation = Quaternion.Slerp(transform.localRotation, playerTargetRot, SmoothFloat * Time.deltaTime);
-            else rb.MoveRotation(Quaternion.Euler(rb.rotation.eulerAngles + new Vector3(0f, yRot, 0f)));
+            desiredYaw += mouseInput.x * MouseSensetivity * Time.deltaTime;
+
+            transform.rotation = Quaternion.Euler(new Vector3(0, desiredYaw, 0));
         }
 
         private void RotateCamera()
         {
-            var xRot = mouseInput.y * MouseSensetivity;
+            if (cameraLocked) return;
 
-            var camTargetRot = cam.transform.localRotation * Quaternion.Euler(-xRot, 0, 0);
+            //var xRot = mouseInput.y * MouseSensetivity;
 
-            if (Smooth) cam.transform.localRotation = Quaternion.Slerp(cam.transform.localRotation, camTargetRot, SmoothFloat * Time.deltaTime);
-            else cam.transform.localRotation = camTargetRot;
+            desiredPitch -= mouseInput.y * MouseSensetivity * Time.deltaTime;
+            desiredPitch = Mathf.Clamp(desiredPitch, -90, 90);
+
+            cam.transform.localRotation = Quaternion.Euler(new Vector3(desiredPitch, 0, 0));
         }
 
         private void Jump(float jumpHeight)
@@ -136,20 +211,50 @@ namespace GoomerFPSController
 
             if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
             {
-                rb.velocity = new Vector3(0, jumpHeight, 0);
+                if(animator )//move
+                    animator.SetTrigger("Jump");
+
+                var jumpVelocity = new Vector3(0, jumpHeight, 0);
+                jumpVelocity.y = Mathf.Clamp(jumpVelocity.y, -jumpHeight, jumpHeight);
+                //jumpVelocity = transform.TransformDirection(jumpVelocity);
+
+                rb.velocity = jumpVelocity;
             }
+
+            CheckWall();
         }
 
         private void CheckWall()
         {
             Vector3 horizontalMove = rb.velocity;
             horizontalMove.y = 0;
-            float distance = horizontalMove.magnitude * Time.fixedDeltaTime;
+            float distance = horizontalMove.magnitude;
             horizontalMove.Normalize();
 
             if (rb.SweepTest(horizontalMove, out var hit, distance))
             {
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                //rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                Debug.DrawLine(transform.position, hit.point, Color.yellow);
+            }
+        }
+
+        private float SlopeMultiplier()
+        {
+            float angle = Vector3.Angle(groundNormal, Vector3.up);
+            return SlopeCurveModifier.Evaluate(angle);
+        }
+
+        void GetGroundNormal()
+        {
+            Debug.DrawRay(colliderBottom + new Vector3(0, 0.1f, 0), Vector3.down, Color.red);
+
+            if (Physics.Raycast(colliderBottom + new Vector3(0,0.1f,0), Vector3.down, out var hitInfo, 0.2f, GroundMask))
+            {
+                groundNormal = hitInfo.normal;
+            }
+            else
+            {
+                groundNormal = Vector3.up;
             }
         }
 
@@ -163,18 +268,18 @@ namespace GoomerFPSController
             colliderBottom = capsuleCollider.bounds.center - new Vector3(0, 0.999f, 0);
 
             //axis input debug ray at the bottom of collider
-            Debug.DrawRay(colliderBottom, moveDirection, Color.blue);
+            Debug.DrawRay(colliderBottom, targetVelocity, Color.blue);
 
             //ground check ray at the bottom of collider
             if (IsGrounded)
             {
                 Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(colliderBottom, 0.25f);
+                Gizmos.DrawWireSphere(colliderBottom, 0.2f);
             }
             else
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(colliderBottom, 0.25f);
+                Gizmos.DrawWireSphere(colliderBottom, 0.2f);
             }
         }
 
@@ -183,10 +288,12 @@ namespace GoomerFPSController
             if (Input.GetKeyUp(KeyCode.Escape))
             {
                 cursorIsLocked = false;
+                cameraLocked = true;
             }
-            else if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(0) && !IsPointerOverUiObject())
             {
                 cursorIsLocked = true;
+                cameraLocked = false;
             }
 
             if (cursorIsLocked)
@@ -202,5 +309,24 @@ namespace GoomerFPSController
         }
 
         #endregion
+
+        //helper functions
+        public static bool IsPointerOverUiObject()
+        {
+            var eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+            {
+                position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+            };
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            return results.Count > 0;
+        }
+
+        private IEnumerator LerpFloat(float fromValue, float toValue, float lerpSpeed)
+        {
+            Mathf.Lerp(fromValue, toValue, lerpSpeed * Time.deltaTime);
+
+            yield return new WaitForSeconds(lerpSpeed);
+        }
     }
 }

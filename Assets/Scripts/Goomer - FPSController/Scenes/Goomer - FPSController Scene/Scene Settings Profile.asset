@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2150ee00179b2f4418ea8b21a7e98eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   colorMode:
     m_OverrideState: 1
@@ -186,7 +186,7 @@ MonoBehaviour:
     min: 0
   includeSunInBaking:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   sunSize:
     m_OverrideState: 1
     m_Value: 0.2
@@ -204,7 +204,7 @@ MonoBehaviour:
     max: 5
   skyTint:
     m_OverrideState: 1
-    m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_Value: {r: 0.09967959, g: 0.44140244, b: 0.6037736, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
