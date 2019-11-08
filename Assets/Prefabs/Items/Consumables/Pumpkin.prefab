@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6208821672381153475}
   - component: {fileID: 6208821672382284291}
   - component: {fileID: 1380182078}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,9 +102,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6208821672384571075}
-  - component: {fileID: 2471786091297850919}
   - component: {fileID: 1380717118}
-  m_Layer: 0
+  - component: {fileID: 942423440}
+  m_Layer: 10
   m_Name: Pumpkin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,19 +126,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2471786091297850919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6208821672384571074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e6d1262835d17c4a9f0b2208f76921d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemInfo: {fileID: 11400000, guid: ecf93e7f4779b2e4e892afb6e4aa0018, type: 2}
 --- !u!54 &1380717118
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -155,3 +142,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &942423440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208821672384571074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e6d1262835d17c4a9f0b2208f76921d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemBaseInfo: {fileID: 11400000, guid: ecf93e7f4779b2e4e892afb6e4aa0018, type: 2}
+  ItemTypeInfo: {fileID: 11400000, guid: 3cd9a97036a935a4b90044aab85ad8fc, type: 2}

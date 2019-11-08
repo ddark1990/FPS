@@ -12,13 +12,9 @@ public class PlayerSelection : MonoBehaviour
     [SerializeField] private float Threshold = 0.97f;
     [SerializeField] private float MaxDistance = 2f;
     [SerializeField] private LayerMask LayerMask;
-
-    [Header("Input Settings")]
-    [SerializeField] private KeyCode InteractKey = KeyCode.E;
    
     [Header("Cache")]
     [SerializeField] private Camera Cam;
-    [SerializeField] private Shader OutlineShader;
 
     private RaycastHit hit;
 
@@ -33,13 +29,6 @@ public class PlayerSelection : MonoBehaviour
     private void Start()
     {
         InvokeRepeating("GetObjectInView", .1f, .1f);
-    }
-
-    void Update()
-    {
-        //GetObjectInView();
-        //ApplyOutline();
-        PickUpItem(ObjectInView);
     }
 
     private void GetObjectInView()
@@ -74,22 +63,6 @@ public class PlayerSelection : MonoBehaviour
                 closest = lookPercent;
                 ObjectInView = SelectableObjects[i].GetComponent<Item>();
             }
-        }
-    }
-
-    private void PickUpItem(Item itemInView)
-    {
-        if (!itemInView) return;
-
-        if(Input.GetKeyDown(InteractKey))
-        {
-            if (InventoryManager.Instance.HoldingItems.Contains(itemInView)) return;
-
-            SelectableObjects.Remove(itemInView.gameObject);
-            InventoryManager.Instance.HoldingItems.Add(itemInView);
-
-            itemInView.gameObject.SetActive(false);
-            itemInView.transform.SetParent(InventoryManager.Instance.transform);
         }
     }
 
