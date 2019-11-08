@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryUIController : MonoBehaviour
@@ -27,6 +28,8 @@ public class InventoryUIController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
+            EventSystem.current.SetSelectedGameObject(null);
+
             MenuOpen = !MenuOpen;
             FPSController.cameraLocked = !FPSController.cameraLocked;
             FPSController.cursorIsLocked = !FPSController.cursorIsLocked;

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aabe10f47ab7ea4882cc1c9e2bf65ca, type: 3}
-  m_Name: Item
+  m_Script: {fileID: 11500000, guid: 792db4fe75642104588207eebd455b34, type: 3}
+  m_Name: PumpkinConsumable
   m_EditorClassIdentifier: 
-  itemType: 0
-  ItemName: 
-  ItemDescription: 
-  ItemSprite: {fileID: 0}
-  StackLimit: 0
+  Cookable: 0
+  Raw: 0
+  GiveHealthAmmount: 10
+  GiveCaloriesAmmount: 100
+  GiveHydrationAmmount: 30

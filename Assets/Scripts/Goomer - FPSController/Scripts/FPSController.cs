@@ -84,6 +84,12 @@ namespace GoomerFPSController
 
         }
 
+        private void FixedUpdate()
+        {
+            RotatePlayer();
+            AltLook();
+        }
+
         private void LateUpdate()
         {
             RotateCamera();
@@ -148,10 +154,7 @@ namespace GoomerFPSController
                 //animator.speed = moveSpeedOutput;
             }
 
-            RotatePlayer();
             Jump(maxJumpHeight);
-            AltLook();
-
         }
 
         private void AltLook()

@@ -27,19 +27,19 @@ public class PlayerVitalsUI : MonoBehaviour
     private void Update()
     {
         HealthBar.fillAmount = PlayerVitals.Health / startingHealth;
-        HungerBar.fillAmount = PlayerVitals.Hunger / startingHunger;
-        ThirstBar.fillAmount = PlayerVitals.Thirst / startingThirst;
+        HungerBar.fillAmount = PlayerVitals.Calories / startingHunger;
+        ThirstBar.fillAmount = PlayerVitals.Hydration / startingThirst;
 
         HealthText.text = PlayerVitals.Health.ToString("#");
-        HungerText.text = PlayerVitals.Hunger.ToString("#");
-        ThirstText.text = PlayerVitals.Thirst.ToString("#");
+        HungerText.text = PlayerVitals.Calories.ToString("#");
+        ThirstText.text = PlayerVitals.Hydration.ToString("#");
     }
 
     private void InitStartingValues()
     {
         startingHealth = PlayerVitals.Health;
-        startingHunger = PlayerVitals.Hunger;
-        startingThirst = PlayerVitals.Thirst;
+        startingHunger = PlayerVitals.Calories;
+        startingThirst = PlayerVitals.Hydration;
     }
 
 

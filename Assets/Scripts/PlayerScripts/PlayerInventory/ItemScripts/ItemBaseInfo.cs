@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item", menuName = "CreateItem", order = 1)]
-public class Item : ScriptableObject
+[CreateAssetMenu(fileName = "ItemBaseInfo", menuName = "Create Item/Base Info", order = 0)]
+public class ItemBaseInfo : ScriptableObject
 {
-    public enum ItemType { Consumable, Weapon, Armor, Resource, Placeable }
-    [Header("Item Type")]
-    public ItemType itemType;
+    //public enum ItemType { Consumable , Weapon, Armor, Placeable, Resource }
+    //[Header("Item Type")]
+    //public ItemType itemType;
 
     [Header("Item Information")]
     public string ItemName;

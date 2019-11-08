@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerVitals : MonoBehaviour
 {
     public float Health;
-    public float Hunger;
-    public float Thirst;
+    public float Calories;
+    public float Hydration;
 
     [Range(0, 25)] public float hungerRate;
     [Range(0, 25)] public float thirstRate;
 
     private float maxHealth = 100;
-    private float maxHunger = 500;
-    private float maxThirst = 250;
+    private float maxCalories = 500;
+    private float maxHydration = 250;
 
 
     private void Awake()
@@ -32,19 +32,19 @@ public class PlayerVitals : MonoBehaviour
     private void StartStats()
     {
         Health = maxHealth;
-        Hunger = maxHunger;
-        Thirst = maxThirst;
+        Calories = maxCalories;
+        Hydration = maxHydration;
     }
 
     private void HungerOutput()
     {
-        Hunger = Mathf.Clamp(Hunger, 0, maxHunger);
-        Hunger -= Time.deltaTime * hungerRate;
+        Calories = Mathf.Clamp(Calories, 0, maxCalories);
+        Calories -= Time.deltaTime * hungerRate;
     }
     private void ThirstOutput()
     {
-        Thirst = Mathf.Clamp(Thirst, 0, maxThirst);
-        Thirst -= Time.deltaTime * thirstRate;
+        Hydration = Mathf.Clamp(Hydration, 0, maxHydration);
+        Hydration -= Time.deltaTime * thirstRate;
     }
 
     private void HealthClamp()
