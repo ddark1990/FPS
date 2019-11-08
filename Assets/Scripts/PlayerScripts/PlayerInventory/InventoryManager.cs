@@ -29,7 +29,6 @@ public class InventoryManager : MonoBehaviour
     private void Update()
     {
         PickUpItem(PlayerSelection.Instance.ObjectInView);
-        DragItemsInInventory();
     }
 
     private InventorySlot GetCurrentlySelectSlot()
@@ -79,7 +78,7 @@ public class InventoryManager : MonoBehaviour
         var originalPos = new Vector3(0, 0, 0);
         var itemHolder = CurrentlySelectedSlot.ItemHolder;
 
-        if (Input.GetKey(KeyCode.Mouse0)) //fix
+        if (Input.GetKey(KeyCode.Mouse0)) 
         {
             itemHolder.transform.position = Input.mousePosition;
             itemHolder.beingDragged = true;
@@ -90,4 +89,5 @@ public class InventoryManager : MonoBehaviour
             itemHolder.beingDragged = false;
         }
     }
+
 }

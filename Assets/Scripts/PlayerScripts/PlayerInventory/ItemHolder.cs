@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ItemHolder : MonoBehaviour
 {
@@ -48,5 +49,4 @@ public class ItemHolder : MonoBehaviour
         ItemSprite.sprite = CurrentlyHeldItem.ItemBaseInfo.ItemSprite;
         StackAmmountText.text = "x" + StackSize.ToString();
     }
-
 }

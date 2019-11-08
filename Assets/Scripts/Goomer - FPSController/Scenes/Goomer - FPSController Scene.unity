@@ -1126,6 +1126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 121407599}
+  parentRect: {fileID: 0}
 --- !u!114 &79413900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,6 +1259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1853451683}
+  parentRect: {fileID: 0}
 --- !u!114 &100894838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2212,6 +2214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 827727683}
+  parentRect: {fileID: 0}
 --- !u!1 &202566466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2635,6 +2638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 814727178}
+  parentRect: {fileID: 0}
 --- !u!114 &236742550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2904,6 +2908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 624134219}
+  parentRect: {fileID: 0}
 --- !u!114 &274399947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3265,6 +3270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 770133087}
+  parentRect: {fileID: 0}
 --- !u!114 &324783293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3968,6 +3974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 388249747}
+  parentRect: {fileID: 0}
 --- !u!114 &470836253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4525,6 +4532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 195427400}
+  parentRect: {fileID: 0}
 --- !u!114 &561161202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5156,6 +5164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 619825863}
+  parentRect: {fileID: 0}
 --- !u!114 &610989277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6204,6 +6213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 379849659}
+  parentRect: {fileID: 0}
 --- !u!114 &706156275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6617,6 +6627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1361822854}
+  parentRect: {fileID: 0}
 --- !u!114 &753720308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6749,6 +6760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 720396949}
+  parentRect: {fileID: 0}
 --- !u!114 &765601666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8425,6 +8437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1066674183}
+  parentRect: {fileID: 0}
 --- !u!114 &945665455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9378,6 +9391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 31937631}
+  parentRect: {fileID: 0}
 --- !u!114 &1199237197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9510,6 +9524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 295958506}
+  parentRect: {fileID: 0}
 --- !u!114 &1213136310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9957,6 +9972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1450970760}
+  parentRect: {fileID: 0}
 --- !u!114 &1300959924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10229,6 +10245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 688250952}
+  parentRect: {fileID: 0}
 --- !u!114 &1336537300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11483,6 +11500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1757276984}
+  parentRect: {fileID: 0}
 --- !u!114 &1502952139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11615,6 +11633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 54258513}
+  parentRect: {fileID: 0}
 --- !u!114 &1527372087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11694,82 +11713,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527372084}
   m_CullTransparentMesh: 0
---- !u!114 &1529121720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3df29e7cc05fbec4aa43e06ea875565d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  rotation:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-    max: 360
-  skyIntensityMode:
-    m_OverrideState: 0
-    m_Value: 0
-  exposure:
-    m_OverrideState: 0
-    m_Value: 0
-  multiplier:
-    m_OverrideState: 0
-    m_Value: 1
-    min: 0
-  upperHemisphereLuxValue:
-    m_OverrideState: 0
-    m_Value: 1
-    min: 0
-  desiredLuxValue:
-    m_OverrideState: 0
-    m_Value: 20000
-  updateMode:
-    m_OverrideState: 0
-    m_Value: 0
-  updatePeriod:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-  includeSunInBaking:
-    m_OverrideState: 0
-    m_Value: 1
-  sunSize:
-    m_OverrideState: 0
-    m_Value: 0.2
-    min: 0
-    max: 1
-  sunSizeConvergence:
-    m_OverrideState: 0
-    m_Value: 7
-    min: 1
-    max: 10
-  atmosphereThickness:
-    m_OverrideState: 0
-    m_Value: 0.73
-    min: 0
-    max: 5
-  skyTint:
-    m_OverrideState: 0
-    m_Value: {r: 0.09967959, g: 0.44140244, b: 0.6037736, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  groundColor:
-    m_OverrideState: 0
-    m_Value: {r: 0.369, g: 0.349, b: 0.341, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  enableSunDisk:
-    m_OverrideState: 0
-    m_Value: 1
 --- !u!1 &1547506865
 GameObject:
   m_ObjectHideFlags: 0
@@ -11896,6 +11839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 115759500}
+  parentRect: {fileID: 0}
 --- !u!114 &1549537247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11975,6 +11919,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549537244}
   m_CullTransparentMesh: 0
+--- !u!114 &1559020735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df29e7cc05fbec4aa43e06ea875565d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  rotation:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+    max: 360
+  skyIntensityMode:
+    m_OverrideState: 0
+    m_Value: 0
+  exposure:
+    m_OverrideState: 0
+    m_Value: 0
+  multiplier:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  upperHemisphereLuxValue:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  desiredLuxValue:
+    m_OverrideState: 0
+    m_Value: 20000
+  updateMode:
+    m_OverrideState: 0
+    m_Value: 0
+  updatePeriod:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  includeSunInBaking:
+    m_OverrideState: 0
+    m_Value: 1
+  sunSize:
+    m_OverrideState: 0
+    m_Value: 0.2
+    min: 0
+    max: 1
+  sunSizeConvergence:
+    m_OverrideState: 0
+    m_Value: 7
+    min: 1
+    max: 10
+  atmosphereThickness:
+    m_OverrideState: 0
+    m_Value: 0.73
+    min: 0
+    max: 5
+  skyTint:
+    m_OverrideState: 0
+    m_Value: {r: 0.09967959, g: 0.44140244, b: 0.6037736, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  groundColor:
+    m_OverrideState: 0
+    m_Value: {r: 0.369, g: 0.349, b: 0.341, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  enableSunDisk:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!1 &1574167550
 GameObject:
   m_ObjectHideFlags: 0
@@ -12028,6 +12048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 474339960}
+  parentRect: {fileID: 0}
 --- !u!114 &1574167553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12160,6 +12181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1449980832}
+  parentRect: {fileID: 0}
 --- !u!114 &1601432726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12289,6 +12311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentlySelectedSlot: {fileID: 0}
+  HoveringOverSlot: {fileID: 0}
   HoldingItems: []
   InventorySlots: []
 --- !u!1 &1707259825
@@ -12592,6 +12615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 54898314}
+  parentRect: {fileID: 0}
 --- !u!114 &1729108683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13170,6 +13194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1124891437}
+  parentRect: {fileID: 0}
 --- !u!114 &1804798241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13375,6 +13400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1830383626}
+  parentRect: {fileID: 0}
 --- !u!114 &1826012229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14031,6 +14057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1397604550}
+  parentRect: {fileID: 0}
 --- !u!114 &1902403413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14167,6 +14194,7 @@ GameObject:
   - component: {fileID: 1935334659}
   - component: {fileID: 1935334661}
   - component: {fileID: 1935334660}
+  - component: {fileID: 1935334662}
   m_Layer: 0
   m_Name: BackPanel
   m_TagString: Untagged
@@ -14229,6 +14257,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1935334658}
   m_CullTransparentMesh: 0
+--- !u!114 &1935334662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935334658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba62da5d02b6a1445b2b6381c2d186da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invPanel: {fileID: 1131935776}
 --- !u!1 &1936933885
 GameObject:
   m_ObjectHideFlags: 0
@@ -14440,6 +14481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 884403512}
+  parentRect: {fileID: 0}
 --- !u!114 &1957404536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14783,6 +14825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 240914587}
+  parentRect: {fileID: 0}
 --- !u!114 &1965610516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14915,6 +14958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 221591304}
+  parentRect: {fileID: 0}
 --- !u!114 &2016817600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15305,7 +15349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: 55faed0528d58524aade8e6a904b2944, type: 2}
   m_StaticLightingSkyUniqueID: 2
-  m_SkySettings: {fileID: 1529121720}
+  m_SkySettings: {fileID: 1559020735}
   m_SkySettingsFromProfile: {fileID: 8153885318881782577, guid: 55faed0528d58524aade8e6a904b2944,
     type: 2}
 --- !u!114 &2049249849
@@ -15651,6 +15695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHolder: {fileID: 1114977988}
+  parentRect: {fileID: 0}
 --- !u!114 &2067158299
 MonoBehaviour:
   m_ObjectHideFlags: 0
