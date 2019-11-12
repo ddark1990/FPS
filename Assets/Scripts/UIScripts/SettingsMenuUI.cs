@@ -8,6 +8,7 @@ public class SettingsMenuUI : MonoBehaviour
     public GameObject BackPanel;
 
     public Slider MouseSensSlider;
+    public Slider UISoundEffectsSlider;
 
     private CanvasGroup backPanelCanvasGroup;
     private GoomerFPSController.FPSController fpsController;
@@ -22,6 +23,7 @@ public class SettingsMenuUI : MonoBehaviour
     private void Update()
     {
         fpsController.MouseSensetivity = MouseSensSlider.value;
+        InventoryManager.Instance.GetUIVolumeNormalized((int)UISoundEffectsSlider.value);
 
         if(Input.GetKeyDown(KeyCode.Escape) && BackPanel.activeSelf)
         {

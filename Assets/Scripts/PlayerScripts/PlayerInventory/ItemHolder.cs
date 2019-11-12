@@ -7,11 +7,12 @@ using UnityEngine.EventSystems;
 public class ItemHolder : MonoBehaviour
 {
     public Item CurrentlyHeldItem;
-    public int StackSize;
+    public int ItemAmount;
 
     [Header("Cache")]
     public Image ItemSprite;
     public Text StackAmmountText;
+    public Canvas canvas;
 
     public bool beingDragged;
 
@@ -47,6 +48,13 @@ public class ItemHolder : MonoBehaviour
         StackAmmountText.color = tempTextColor;
 
         ItemSprite.sprite = CurrentlyHeldItem.ItemBaseInfo.ItemSprite;
-        StackAmmountText.text = "x" + StackSize.ToString();
+
+        if(ItemAmount == 1) //if weapon or something that is not stackable
+        {
+            StackAmmountText.text = string.Empty;
+            return;
+        }
+
+        StackAmmountText.text = string.Format("x{0:n0}", ItemAmount);
     }
 }

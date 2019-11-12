@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Item : MonoBehaviour, IInteractable
 {
+    public int ItemAmount = 1;
+
     public ItemBaseInfo ItemBaseInfo;
     public ScriptableObject ItemTypeInfo;
 
-
+    private void Update()
+    {
+        ItemAmount = Mathf.Clamp(ItemAmount, 1, ItemBaseInfo.StackLimit);
+    }
 
     #region Interface Info
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4872597055749557381}
   - component: {fileID: 5610250313607961685}
   - component: {fileID: 2811099682418187525}
+  - component: {fileID: 3965562877491099462}
   m_Layer: 0
   m_Name: ItemSprite
   m_TagString: Untagged
@@ -73,6 +74,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!223 &3965562877491099462
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4266877071424619629}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 5
+  m_TargetDisplay: 0
 --- !u!1 &7503705175700385925
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,9 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentlyHeldItem: {fileID: 0}
-  StackSize: 0
+  ItemAmmount: 0
   ItemSprite: {fileID: 2811099682418187525}
   StackAmmountText: {fileID: 7121443193031314508}
+  canvas: {fileID: 3965562877491099462}
+  beingDragged: 0
 --- !u!1 &9156390722356748698
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,10 +183,10 @@ RectTransform:
   m_Father: {fileID: 8240459033531164858}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -21.42, y: 13.35}
-  m_SizeDelta: {x: 39.57, y: 26.69}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -35.62, y: -31.655005}
+  m_SizeDelta: {x: 59.71, y: 26.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3333756500533135612
 CanvasRenderer:
@@ -197,10 +221,10 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 300
-    m_Alignment: 4
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x20
+  m_Text: x1000
