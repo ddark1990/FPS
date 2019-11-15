@@ -7,14 +7,14 @@ public class ConsumableType : ScriptableObject
 {
     public bool Cookable, Raw;
 
-    public float GiveHealthAmmount;
-    public float GiveCaloriesAmmount;
-    public float GiveHydrationAmmount;
+    public float GiveHealthAmount;
+    public float GiveCaloriesAmount;
+    public float GiveHydrationAmount;
 
-    public void Eat(float playerHealth, float playerCalories, float playerHydration)
+    public void EatFood(float playerHealth, float playerCalories, float playerHydration)
     {
-        playerHealth += GiveHealthAmmount;
-        playerCalories += GiveCaloriesAmmount;
-        playerHydration += GiveHydrationAmmount;
+        playerHealth += GiveHealthAmount;
+        playerCalories += GiveCaloriesAmount;
+        playerHydration += GiveHydrationAmount;
     }
 }

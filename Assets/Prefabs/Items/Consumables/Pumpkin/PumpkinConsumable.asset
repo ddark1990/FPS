@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cookable: 0
   Raw: 0
-  GiveHealthAmmount: 10
-  GiveCaloriesAmmount: 100
-  GiveHydrationAmmount: 30
+  GiveHealthAmount: 10
+  GiveCaloriesAmount: 100
+  GiveHydrationAmount: 30

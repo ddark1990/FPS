@@ -17,4 +17,8 @@ MonoBehaviour:
   ItemDescription: Shoot people with it.
   ItemSprite: {fileID: 21300000, guid: 296bd7dc1a98d8e4492d86860544f4d2, type: 3}
   StackLimit: 1
-  ItemSoundClip: {fileID: 8300000, guid: 58bdf7c5c57fa4f4292ab39aab41c766, type: 3}
+  PickUpItemSound: {fileID: 8300000, guid: 6c736df29056c294f9fbcdaea24c379c, type: 3}
+  DropItemSound: {fileID: 8300000, guid: cd7c93d5224bef74c899b4c3b7390d9c, type: 3}
+  SelectSound: {fileID: 8300000, guid: 234dcf1353eb8fb4283b8eb586e4a7fc, type: 3}
+  DragSound: {fileID: 8300000, guid: cadda560a69740e4390a7742a37d5be9, type: 3}
+  DropSound: {fileID: 8300000, guid: 3747e18759907c44696dbf582829f7c4, type: 3}

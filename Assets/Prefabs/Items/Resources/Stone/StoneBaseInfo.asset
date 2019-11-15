@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemSprite: {fileID: 21300000, guid: 521dc6cd92b5eaf41a009b8d2943c5a4, type: 3}
   StackLimit: 1000
   PickUpItemSound: {fileID: 8300000, guid: 6c736df29056c294f9fbcdaea24c379c, type: 3}
-  DropItemSound: {fileID: 0}
+  DropItemSound: {fileID: 8300000, guid: cd7c93d5224bef74c899b4c3b7390d9c, type: 3}
   SelectSound: {fileID: 8300000, guid: 234dcf1353eb8fb4283b8eb586e4a7fc, type: 3}
   DragSound: {fileID: 8300000, guid: cadda560a69740e4390a7742a37d5be9, type: 3}
   DropSound: {fileID: 8300000, guid: 3747e18759907c44696dbf582829f7c4, type: 3}

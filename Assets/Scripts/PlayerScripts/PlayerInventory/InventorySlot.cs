@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public ItemHolder ItemHolder;
     public bool Occupied;
+    public bool playedOnce;
 
     private ItemHolder tempHolder;
 
@@ -16,6 +17,12 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         iTween.PunchScale(gameObject, new Vector3(.1f, .1f, .1f), .5f);
         InventoryUIController.Instance.PlayOnHoverSlotSound(.02f);
         InventoryManager.Instance.HoveringOverSlot = this;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        InventoryManager.Instance.DropSlot = this;
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -27,19 +34,32 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (Occupied && ItemHolder.CurrentlyHeldItem)
         {
-            InventoryManager.Instance.audioSource.PlayOneShot(ItemHolder.CurrentlyHeldItem.ItemBaseInfo.SelectSound, InventoryManager.Instance.uiVolume);
-        }
+            InventoryManager.Instance.InfoPanelUIController.ChangeActivePanel();
 
+            InventoryManager.Instance.audioSource.PlayOneShot(ItemHolder.CurrentlyHeldItem.ItemBaseInfo.SelectSound, InventoryManager.Instance.uiVolume);
+
+            InventoryManager.Instance.reset = true;
+        }
     }
-    public bool playedOnce;
 
     public void OnDrag(PointerEventData eventData) //item drag handling
     {
+        if(Input.GetKey(KeyCode.Mouse1)) //grabs a single item out of stack
+        {
+            //InventoryManager.Instance.GrabSingleItemFromStack(this);
+            return;
+        }
+        else if(Input.GetKey(KeyCode.Mouse2)) //grab half of stack
+        {
+            //InventoryManager.Instance.GrabHalfStack(ItemHolder, this);
+            return;
+        }
+
         tempHolder = ItemHolder;
 
-        if (!tempHolder.CurrentlyHeldItem) return;
+        if (!tempHolder || !tempHolder.CurrentlyHeldItem) return;
 
-        tempHolder.canvas.sortingOrder = 6;
+        tempHolder.canvas.sortingOrder = 7;
         tempHolder.beingDragged = true;
         tempHolder.transform.position = Input.mousePosition;
 
@@ -51,9 +71,19 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (Input.GetKeyUp(KeyCode.Mouse1)) 
+        {
+            return;
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse2)) 
+        {
+
+            return;
+        }
+
         tempHolder.beingDragged = false;
         tempHolder.transform.localPosition = Vector3.zero;
-        tempHolder.canvas.sortingOrder = 5;
+        tempHolder.canvas.sortingOrder = 6;
 
         tempHolder = null;
         playedOnce = false;
@@ -63,8 +93,21 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (Input.GetKeyUp(KeyCode.Mouse1)) //drop a single item into a stack, onto another empty slot, or return back to stack if slot is occupied by another type
+        {
+            //InventoryManager.Instance.DropSingleItemOntoSlot(this);
+            return;
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse2)) //drop half a stack into another stack, onto another empty slot, or return back to stack if slot is occupied by another type
+        {
+
+            return;
+        }
+
         if (RectTransformUtility.RectangleContainsScreenPoint((RectTransform)transform, Input.mousePosition))
         {
+            //logic seperated///
+
             if (!Occupied)
             {
                 InventoryManager.Instance.MoveItem(ItemHolder, this);
@@ -75,4 +118,5 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         }
     }
+
 }

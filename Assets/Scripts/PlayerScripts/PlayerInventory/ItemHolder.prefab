@@ -93,7 +93,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!1 &7503705175700385925
 GameObject:
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentlyHeldItem: {fileID: 0}
-  ItemAmmount: 0
+  ItemAmount: 0
   ItemSprite: {fileID: 2811099682418187525}
   StackAmmountText: {fileID: 7121443193031314508}
   canvas: {fileID: 3965562877491099462}

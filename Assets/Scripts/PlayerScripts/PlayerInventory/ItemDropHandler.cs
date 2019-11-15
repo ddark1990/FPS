@@ -11,8 +11,8 @@ public class ItemDropHandler : MonoBehaviour, IDropHandler
     {
         if (!RectTransformUtility.RectangleContainsScreenPoint(invPanel, Input.mousePosition))
         {
-            //Debug.Log("Item Dropped");
-            //player itemdroped sound
+            Debug.Log("Item Dropped");
+            InventoryManager.Instance.DropItem();
         }
     }
 }

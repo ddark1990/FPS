@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerSelection : MonoBehaviour
 {
@@ -80,4 +81,16 @@ public class PlayerSelection : MonoBehaviour
 
         Debug.DrawRay(ray.origin, ray.direction * MaxDistance);
     }
+
+    public static bool IsPointerOverUiObject()
+    {
+        var eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
+
 }

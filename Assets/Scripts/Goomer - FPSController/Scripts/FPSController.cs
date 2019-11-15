@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GoomerFPSController
@@ -293,7 +292,7 @@ namespace GoomerFPSController
                 cursorIsLocked = false;
                 cameraLocked = true;
             }
-            else if (Input.GetMouseButtonUp(0) && !IsPointerOverUiObject())
+            else if (Input.GetMouseButtonUp(0) && !PlayerSelection.IsPointerOverUiObject())
             {
                 cursorIsLocked = true;
                 cameraLocked = false;
@@ -314,16 +313,6 @@ namespace GoomerFPSController
         #endregion
 
         //helper functions
-        public static bool IsPointerOverUiObject()
-        {
-            var eventDataCurrentPosition = new PointerEventData(EventSystem.current)
-            {
-                position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
-            };
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-            return results.Count > 0;
-        }
 
         private IEnumerator LerpFloat(float fromValue, float toValue, float lerpSpeed)
         {
